@@ -1,0 +1,160 @@
+<mvc:View
+    controllerName="project14.controller.Main"
+    displayBlock="true"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page title="{i18n>appTitle}" busy="{play>/Loading}" busyIndicatorDelay="0">
+        <content>
+            <VBox>
+                <VBox
+                    class="sapUiSmallMargin"
+                    visible="{= !${play>/InProgress} &amp;&amp; !${play>/Completed} }">
+                    <Title text="{i18n>pageTitle}" level="H2"/>
+                    <Text text="{i18n>pageSubtitle}"/>
+                </VBox>
+                <Toolbar visible="{= !${play>/InProgress} &amp;&amp; !${play>/Completed} }">
+                    <Title text="{i18n>quizListTitle}" level="H3"/>
+                    <ToolbarSpacer/>
+                    <SearchField
+                        id="quizSearch"
+                        width="20rem"
+                        placeholder="{i18n>searchPlaceholder}"
+                        liveChange=".onSearch"
+                        search=".onSearch"/>
+                    <Button
+                        icon="sap-icon://refresh"
+                        tooltip="{i18n>refresh}"
+                        press=".onRefresh"/>
+                </Toolbar>
+                <Table
+                    id="quizTable"
+                    inset="false"
+                    visible="{= !${play>/InProgress} &amp;&amp; !${play>/Completed} }"
+                    mode="SingleSelectLeft"
+                    growing="true"
+                    growingScrollToLoad="true"
+                    noDataText="{i18n>noQuizzes}"
+                    selectionChange=".onQuizSelectionChange"
+                    items="{quiz>/Quiz}">
+                    <columns>
+                        <Column>
+                            <Text text="{i18n>quizId}"/>
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>quizName}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle" type="Inactive">
+                            <cells>
+                                <Text text="{quiz>TestId}"/>
+                                <Text text="{quiz>Description}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <VBox
+                    class="sapUiSmallMargin"
+                    visible="{= !${play>/InProgress} &amp;&amp; !${play>/Completed} &amp;&amp; !!${selection>/TestId} }">
+                    <HBox alignItems="Center" justifyContent="SpaceBetween">
+                        <VBox>
+                            <Label text="{i18n>selectedQuiz}" labelFor="selectedQuiz"/>
+                            <ObjectIdentifier
+                                id="selectedQuiz"
+                                title="{selection>/Description}"
+                                text="{selection>/TestId}"/>
+                        </VBox>
+                        <Button
+                            text="{i18n>playQuiz}"
+                            type="Emphasized"
+                            icon="sap-icon://media-play"
+                            press=".onPlayQuiz"/>
+                    </HBox>
+                </VBox>
+                <VBox
+                    class="sapUiMediumMargin"
+                    visible="{play>/InProgress}">
+                    <Toolbar>
+                        <Button
+                            icon="sap-icon://nav-back"
+                            tooltip="{i18n>exitQuiz}"
+                            press=".onExitQuiz"/>
+                        <Title text="{selection>/Description}" level="H3"/>
+                        <ToolbarSpacer/>
+                        <Text text="{play>/ProgressText}"/>
+                    </Toolbar>
+                    <ProgressIndicator
+                        percentValue="{play>/ProgressPercent}"
+                        displayValue="{play>/ProgressText}"
+                        showValue="true"/>
+                    <Title
+                        class="sapUiMediumMarginTop"
+                        text="{play>/CurrentQuestion/Question}"
+                        level="H2"/>
+                    <Text
+                        text="{i18n>selectAllThatApply}"
+                        visible="{= ${play>/ActiveSelectionMode} === 'MultiSelect' }"/>
+                    <List
+                        id="answerList"
+                        class="sapUiSmallMarginTop"
+                        mode="{play>/ActiveSelectionMode}"
+                        includeItemInSelection="true"
+                        selectionChange=".onAnswerSelectionChange"
+                        items="{play>/CurrentQuestion/Options}"
+                        visible="{= !${play>/IsFreeText} }">
+                        <items>
+                            <CustomListItem>
+                                <VBox class="sapUiSmallMargin">
+                                    <Text text="{play>Variant}" wrapping="true"/>
+                                </VBox>
+                            </CustomListItem>
+                        </items>
+                    </List>
+                    <Input
+                        class="sapUiSmallMarginTop"
+                        value="{play>/TextAnswer}"
+                        placeholder="{i18n>freeTextPlaceholder}"
+                        liveChange=".onTextAnswerChange"
+                        editable="{= !${play>/Submitted} }"
+                        visible="{play>/IsFreeText}"/>
+                    <VBox
+                        class="sapUiSmallMarginTop"
+                        visible="{play>/Submitted}">
+                        <ObjectStatus
+                            text="{play>/AnswerFeedback}"
+                            state="{= ${play>/WasCorrect} ? 'Success' : 'Error' }"/>
+                        <Text text="{play>/Explanation}" wrapping="true"/>
+                        <Text
+                            text="{i18n>correctAnswer}: {play>/CorrectAnswerText}"
+                            visible="{= !${play>/WasCorrect} }"
+                            wrapping="true"/>
+                    </VBox>
+                    <HBox class="sapUiMediumMarginTop" justifyContent="End">
+                        <Button
+                            text="{i18n>submitAnswer}"
+                            type="Emphasized"
+                            enabled="{play>/CanSubmit}"
+                            visible="{= !${play>/Submitted} }"
+                            press=".onSubmitAnswer"/>
+                        <Button
+                            text="{play>/NextButtonText}"
+                            type="Emphasized"
+                            visible="{play>/Submitted}"
+                            press=".onNextQuestion"/>
+                    </HBox>
+                </VBox>
+                <VBox
+                    class="sapUiMediumMargin"
+                    visible="{play>/Completed}">
+                    <Title text="{i18n>quizComplete}" level="H2"/>
+                    <Text text="{play>/ResultText}"/>
+                    <Button
+                        class="sapUiSmallMarginTop"
+                        text="{i18n>returnToQuizzes}"
+                        press=".onReturnToQuizzes"/>
+                </VBox>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

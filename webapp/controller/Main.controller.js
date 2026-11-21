@@ -14,6 +14,7 @@ sap.ui.define(
                 this.getView().setModel(new JSONModel({}), "selection");
                 this.getView().setModel(new JSONModel(this._createPlayState()), "play");
                 this.getView().getModel("quiz").attachRequestFailed(this.onRequestFailed, this);
+                this._applyQuizFilters("");
             },
 
             _createPlayState: function () {
@@ -47,20 +48,12 @@ sap.ui.define(
             },
 
             _applyQuizFilters: function (sQuery) {
-                var aFilters = [];
+                var aFilters = [
+                    new Filter("Published", FilterOperator.EQ, "X")
+                ];
+
                 if (sQuery) {
-                    var aSearchFilters = [
-                        new Filter("Description", FilterOperator.Contains, sQuery)
-                    ];
-
-                    if (/^\d+$/.test(sQuery)) {
-                        aSearchFilters.push(new Filter("TestId", FilterOperator.EQ, sQuery));
-                    }
-
-                    aFilters.push(new Filter({
-                        filters: aSearchFilters,
-                        and: false
-                    }));
+                    aFilters.push(new Filter("Description", FilterOperator.Contains, sQuery));
                 }
 
                 this.byId("quizTable").getBinding("items").filter(aFilters);

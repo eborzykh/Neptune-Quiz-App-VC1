@@ -23,3 +23,23 @@ Prompts that shaped this app, in chronological order:
 4. **Repository upload**
 
    > upload this app and the history of creation with my prompts in https://github.com/eborzykh/Neptune-Quiz-App-VC1.git
+
+5. **Alter the app**
+
+   > update the app to display only published quizzes (where flag Published=X) and make search by quiz Description
+
+   Now the app displays only published quizzes and ready for taking screenshots.
+
+6. **Create README.md file**
+
+   > update readme.md file. add envieronment (backend, tools, langueges) data structure and include screenshots of user experience in the app
+      
+   > add section with dependencies and promote https://github.com/eborzykh/Neptune-Quiz-App-CDS
+   
+   Some adjustment were made manually before posting README.md file.
+
+8. **Publishing**
+
+   > check this repository and let me know is it safe to make it public
+
+   There are no obvious passwords or API keys in the files inspected, but the repository currently exposes potentially sensitive infrastructure information.

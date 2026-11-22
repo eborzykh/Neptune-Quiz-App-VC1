@@ -27,6 +27,22 @@ explanations, progress, and a final score.
 
 ![Quiz question screen](screenshots/quiz-question.png)
 
+### Correct answer
+
+![Quiz question screen](screenshots/quiz-correct.png)
+
+### Wrong answer
+
+![Quiz question screen](screenshots/quiz-incorrect.png)
+
+### Trying to exit unfinished quiz
+
+![Quiz question screen](screenshots/quiz-exit.png)
+
+### Finishing quiz
+
+![Quiz question screen](screenshots/quiz-complete.png)
+
 ## Environment
 
 - **Backend:** SAP Gateway OData V2 service at
@@ -44,7 +60,7 @@ Users also need access to the OData service.
 
 ## Dependencies
 
-- **Related ABAP CDS project:** Explore
+- **Related ABAP CDS project and the backend:** Explore
   [Neptune-Quiz-App-CDS](https://github.com/eborzykh/Neptune-Quiz-App-CDS), a
   data visualization and maintenance layer for Neptune Quiz App, created to
   test and demo ABAP CDS implementations. It documents dependencies on
